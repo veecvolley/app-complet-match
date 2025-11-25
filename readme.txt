@@ -1,9 +1,3 @@
-C'est une excellente suggestion ! L'historique des difficultés rencontrées est souvent l'information la plus précieuse pour la maintenance et l'évolution du projet. J'ai revu la section des difficultés pour y intégrer les problèmes majeurs de conception et de développement que nous avons traversés.
-
-Voici la synthèse finale, avec une nouvelle section focalisée sur les **Défis de Conception et de Débogage** que nous avons surmontés.
-
----
-
 # 🚀 Synthèse Globale du Projet : VEEC Scorer (Version Finale)
 
 L'application **VEEC Scorer** est un outil de suivi de match interactif, construit avec **Python (Dash/Plotly)**, destiné à enregistrer le score, gérer les remplacements, suivre les temps morts, et visualiser la formation des équipes en temps réel sur un terrain de volleyball.
