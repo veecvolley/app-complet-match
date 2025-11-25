@@ -1,0 +1,9 @@
+dash>=2.14.0
+plotly>=5.18.0
+pandas>=2.1.0
+
+# Serveurs de production
+gunicorn>=21.2.0
+
+# Utilitaires
+python-dotenv>=1.0.0

@@ -1,0 +1,58 @@
+version: '3.8'
+
+# Configuration Docker Compose pour DÉVELOPPEMENT
+# Usage: docker-compose -f docker-compose.dev.yml up
+
+services:
+  veec-scorer-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: veec-scorer-dev
+    image: veec-scorer:dev
+
+    # Port mapping
+    ports:
+      - "8051:8051"
+
+    # Variables d'environnement pour développement
+    environment:
+      - DASH_DEBUG=True
+      - HOST=0.0.0.0
+      - PORT=8051
+      - TZ=Europe/Paris
+      - PYTHONUNBUFFERED=1
+
+    # Volumes pour hot-reload en développement
+    volumes:
+      - ./app.py:/app/app.py
+      - ./wsgi.py:/app/wsgi.py
+      - ./src:/app/src
+      - ./config:/app/config
+      - ./assets:/app/assets
+      - ./logs:/app/logs
+
+    # Commande pour développement avec auto-reload
+    command: python app.py
+
+    # Redémarrage automatique
+    restart: unless-stopped
+
+    # Health check désactivé en dev
+    healthcheck:
+      disable: true
+
+    # Logging verbose
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
+
+    # Network
+    networks:
+      - veec-dev-network
+
+networks:
+  veec-dev-network:
+    driver: bridge

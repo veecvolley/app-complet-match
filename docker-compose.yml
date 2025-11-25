@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  veec-scorer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: veec-scorer-app
+    image: veec-scorer:latest
+
+    # Port mapping
+    ports:
+      - "8051:8051"
+
+    # Variables d'environnement
+    environment:
+      - DASH_DEBUG=False
+      - HOST=0.0.0.0
+      - PORT=8051
+      - TZ=Europe/Paris
+
+    # Volumes pour persistance (optionnel)
+    volumes:
+      - ./logs:/app/logs
+      # Décommenter pour développement avec hot-reload
+      # - ./app.py:/app/app.py
+      # - ./src:/app/src
+      # - ./config:/app/config
+
+    # Redémarrage automatique
+    restart: unless-stopped
+
+    # Limits des ressources
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8051').read()"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+    # Logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    # Network
+    networks:
+      - veec-network
+
+networks:
+  veec-network:
+    driver: bridge
