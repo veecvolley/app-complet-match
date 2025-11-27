@@ -4,7 +4,7 @@ services:
   veec-scorer:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfilemrsfjhpdfnl
     container_name: veec-scorer-app
     image: veec-scorer:latest
 
